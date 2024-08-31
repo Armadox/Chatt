@@ -47,9 +47,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${permanentMarker.className} bg-stone-400 text-stone-100 min-w-screen min-h-screen bg-[url('../public/images/samurai.png')] bg-contain bg-center bg-no-repeat`}> 
-        <Container>
-          {children}
-        </Container>
+        {children}
       </body>
     </html>
   );
