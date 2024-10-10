@@ -8,7 +8,7 @@ interface BrushedProps {
 const Brushed: React.FC<BrushedProps> = ({children, brush}) => {
     const backgroundImage = `/images/brush-stroke-banner-${brush}.png`;
     return (
-        <div className={`relative m-10 p-10 bg-no-repeat bg-center bg-[length:100%_100%] overflow-visible`} style={{ backgroundImage: `url(${backgroundImage})` }}>
+        <div className={`relative p-4 bg-no-repeat bg-center bg-[length:100%_100%] overflow-visible`} style={{ backgroundImage: `url(${backgroundImage})` }}>
             {children}
         </div>
     )
