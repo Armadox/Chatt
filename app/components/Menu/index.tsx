@@ -44,22 +44,22 @@ const Menu:React.FC<MenuProps> = ({servers, account}) => {
                 </div>
             </div>
             {/*<div className="h-[4rem] mx-2 bg-[url('../public/images/home2.png')] bg-center bg-contain bg-no-repeat"/>*/}
-            <div className="min-h-[10rem] h-[10rem] flex my-8 items-center justify-center">
+            <div className="min-h-[10rem] h-[10rem] flex flex-none my-8 items-center justify-center">
                 <span className="transform text-3xl rotate-[-90deg] origin-center text-white cursor-pointer">
                     SAMURAI
                 </span>
             </div>
             <div className="h-full flex flex-col items-center gap-6">
                 <hr className="h-1 w-[80%] text-white"/>
-                <div className="cursor-pointer h-[60px] w-[60px] bg-white transition-all rounded-[28px] hover:rounded-[16px] text-black text-3xl flex items-center justify-center" onClick={() => setOpen(true)}>
+                <div className="cursor-pointer flex flex-none h-[60px] w-[60px] bg-white transition-all rounded-[28px] hover:rounded-[16px] text-black text-3xl flex items-center justify-center" onClick={() => setOpen(true)}>
                     <span className="h-[70%]">+</span>
                 </div>
-                <div className="cursor-pointer h-[60px] w-[60px] bg-white transition-all rounded-[28px] hover:rounded-[16px] text-black text-3xl flex items-center justify-center" onClick={() => setOpen2(true)}>
-                    <span className="h-[70%]">S</span>
+                <div className="cursor-pointer flex flex-none h-[60px] w-[60px] bg-white transition-all rounded-[28px] hover:rounded-[16px] text-black text-3xl flex items-center justify-center" onClick={() => setOpen2(true)}>
+                    <span className="h-[70%]">j</span>
                 </div>
                 <hr className="h-1 w-[80%] text-white"/>
                 {serverNames.map((server) => (
-                    <div key={server.id} className="relative cursor-pointer overflow-visible h-[60px] w-[60px] rounded-full bg-[url('../public/images/round.png')] bg-center bg-cover bg-no-repeat"
+                    <div key={server.id} className="relative cursor-pointer overflow-visible flex flex-none h-[60px] w-[60px] rounded-full bg-[url('../public/images/round.png')] bg-center bg-cover bg-no-repeat"
                         onClick={() => handleClick(server.id)}>
                         {server.id === params?.serverId ? (
                             <Image src={`/images/red-circle.png`} width={85} height={85} alt={""} className="absolute h-full w-full bg-center bg-cover object-contain invert"/>) : (

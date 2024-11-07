@@ -28,14 +28,15 @@ const SignIn:React.FC<SignInProps> = ({currentUser}) => {
     }
 
     return(
-        <div className={"hover:invert cursor-pointer"}>
-        <Brushed brush={"1"}>
-            <span className="text-blue-400">G</span><span className="text-red-400">o</span>
-            <span className="text-yellow-400">o</span><span className="text-blue-400">g</span>
-            <span className="text-green-400">l</span><span className="text-red-400">e </span>
-            LogIn
-        </Brushed>
-        <Button label={"LOG IN HERE"} style={0} onClick={() => signIn()}/>
+        <div className="flex items-center justify-center h-screen">
+            <div className="w-[150px] h-[50px]">
+                <Brushed brush="1">
+                <span className="text-blue-400">G</span><span className="text-red-400">o</span>
+                <span className="text-yellow-400">o</span><span className="text-blue-400">g</span>
+                <span className="text-green-400">l</span><span className="text-red-400">e</span> LogIn
+                </Brushed>
+                <Button label="LOG IN HERE" style={0} onClick={() => signIn()} />
+            </div>
         </div>
     )
 }

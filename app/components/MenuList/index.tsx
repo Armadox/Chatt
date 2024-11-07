@@ -77,7 +77,7 @@ const MenuList:React.FC<MenuListProps> = ({id, currentAccount, currentChannels, 
             socket.off(channelKey);
           };
       }
-    }, [socket, channelKey]);
+    }, [socket, channelKey, id]);
 
     useEffect(() => {
       console.log("WHY NOT WORKIN?")
@@ -86,7 +86,8 @@ const MenuList:React.FC<MenuListProps> = ({id, currentAccount, currentChannels, 
 
     
     return(
-        <div className="h-full bg-stone-900 bg-opacity-50 flex flex-col flex-none items-center overflow-y-auto">
+        <div className="h-full bg-stone-900 bg-opacity-50 flex flex-col justify-between flex-none overflow-y-auto">
+          <div className="w-full flex flex-col flex-none items-center">
             <div className="h-[5.5rem] flex flex-none items-center justify-center text-2xl text-red-600">{currentChannels.name}</div>
             <Brushed brush={"1"}>
               <div className="m-5">
@@ -124,6 +125,7 @@ const MenuList:React.FC<MenuListProps> = ({id, currentAccount, currentChannels, 
                           userName={currentAccount.user.name}/>
                   ))}
                 </div>
+            </div>
             </div>
             {token &&
             <LiveKitRoom

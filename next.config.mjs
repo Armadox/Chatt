@@ -9,7 +9,7 @@ const nextConfig = {
     },
     images: {
         domains: ['lh3.googleusercontent.com'], // Add the external domain here
-    },
+    }
 };
 
 export default nextConfig;

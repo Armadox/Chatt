@@ -10,16 +10,16 @@ interface ServerEditorProps{
 }
 
 const ServerEditor:React.FC<ServerEditorProps> = ({server}) => {
+    const [name, setName] = useState<string>("");
+    const [image, setImage] = useState<File | null>(null);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+    const [message, setMessage] = useState("");
 
     if(!server || !server.name || !server.serverImage){
         return(<>...Loading</>)
     }
 
-
-    const [name, setName] = useState(server.name);
-    const [image, setImage] = useState<File | null>(null);
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const [message, setMessage] = useState("");
+    setName(server.name)
     const serverId = server.id;
 
     const handleImageUploadClick = () => {
