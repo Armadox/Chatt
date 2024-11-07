@@ -47,9 +47,9 @@ const JoinGroup:React.FC<ServerCreatorProps> = ({account}) => {
     
     
       return (
-        <div className="min-w-[18rem] max-w-[24rem]">
+        <div className="min-w-[18rem] max-w-[24rem] flex flex-col items-center justify-center">
           <Brushed brush={"1"}>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="m-5">
             <input
                 type="text"
                 value={code}
@@ -57,10 +57,12 @@ const JoinGroup:React.FC<ServerCreatorProps> = ({account}) => {
                 required
                 className="mb-4 text-black"
               />
-              <Brushed brush={"2"}><button type="submit">Join Server</button></Brushed>
+              <div className="invert flex items-center justify-center">
+                <Brushed brush={"2"}><button type="submit">Join Server</button></Brushed>
+              </div>
+              {message && <p className="text-red-600">Something went wrong!</p>}
             </form>
           </Brushed>
-          {message && <p>{message}</p>}
         </div>
       );
     

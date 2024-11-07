@@ -14,7 +14,6 @@ interface MemberMenuProps{
 
 const MemberCard:React.FC<MemberMenuProps> = ({name, email, memberId, image, currentRole, serverId, memberRole}) => {
     const [role, setRole] = useState(memberRole);
-    console.log("MY CURRENT ROLE: ", currentRole)
 
     const handleRoleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
       setRole(e.target.value as "GUEST" | "MODERATOR" | "ADMIN");
@@ -46,17 +45,21 @@ const MemberCard:React.FC<MemberMenuProps> = ({name, email, memberId, image, cur
 
     return (           
           <form onSubmit={handleSubmit}>
-              <h2 className="text-lg font-bold mb-4">{name}</h2>
-              <p>{email}</p>
+              <div className="mb-1 flex items-center justify-center">
               {image && (
-                <Image 
-                  src={image} 
-                  alt={name || "Selected User"} 
-                  width={100} 
-                  height={100} 
-                  className="rounded-full"
-                />
-              )}
+                  <Image 
+                    src={image} 
+                    alt={name || "Selected User"} 
+                    width={60} 
+                    height={60} 
+                    className="rounded-full"
+                  />
+                )}
+              </div>
+              <h2 className="text-lg font-bold mb-1 flex items-center justify-center">{name}</h2>
+              <div className="flex justify-center items-center">
+                <p>{email}</p>
+              </div>
               {(currentRole === "MODERATOR" || currentRole === "ADMIN") &&
               <>
               <select value={role} onChange={handleRoleChange}>

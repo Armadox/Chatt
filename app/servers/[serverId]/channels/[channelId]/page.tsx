@@ -6,8 +6,6 @@ const ChannelPage = async ({params}: {params: {channelId: string, serverId: stri
     const currentServer = await getCurrentServer(params.serverId)
     const currentMember = await getCurrentMember(currentAccount?.userId, params.serverId)
 
-    console.log("CURRENT SERVEEEEER: ",currentServer)
-
     if(!currentAccount || !currentMember){
         return <div>ACCOUNT NOT VALID?!</div>
     }

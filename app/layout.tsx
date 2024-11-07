@@ -77,10 +77,8 @@ export default async function RootLayout({children}: Readonly<{children: React.R
           <div className="relative z-20 w-screen h-screen flex">
             <Session>
               <SocketProvider>
-                <QueryProvider>
                   <Menu servers={servers} account={currentAccount}/>
                   {children}
-                </QueryProvider>
               </SocketProvider>
             </Session>
           </div>

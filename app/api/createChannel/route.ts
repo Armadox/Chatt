@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
 import { ChannelType } from "@prisma/client";
 import prisma from "@/lib/prisma";
+import { NextApiResponseServerIo } from "@/types";
 
-export const POST = async (req: Request) => {
+export const POST = async (req: Request, res: NextApiResponseServerIo) => {
   const {serverId, channelType, channelName, userId} = await req.json();
   
   if (!serverId || !channelType || !channelName || !userId) {

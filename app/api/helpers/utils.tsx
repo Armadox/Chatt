@@ -86,6 +86,14 @@ export async function getCurrentAccount() {
   const currentAccount = await prisma.account.findUnique({
     where:{
         userId: currentUser.id
+    },
+    include:{
+      user:{
+        select:{
+          name: true,
+          image: true
+        }
+      }
     }
   })
 
@@ -196,6 +204,24 @@ export async function getChannels(serverId: string) {
   return {...channels}
 }
 
+export async function getChannels2(serverId: string) {
+  if(!serverId){
+    return null
+  }
+
+  const channels = await prisma.channel.findMany({
+    where:{
+        serverId: serverId,
+    },
+  })
+
+  if(!channels){
+    return null
+  }
+
+  return {...channels}
+}
+
 
 
 export async function getMembers(serverId: string) {
@@ -216,11 +242,11 @@ export async function getMembers(serverId: string) {
       serverId: true,
       profile: {
         select: {
-          userId: true, // Selecting only the userId from Profile
+          userId: true, 
           user: {
             select: {
-              name: true, // Selecting only the name from User
-              email: true, // Selecting only the email from User
+              name: true,
+              email: true,
               image: true
             },
           },
@@ -234,7 +260,7 @@ export async function getMembers(serverId: string) {
     return null
   }
 
-  return {...members}
+  return members
 }
 
 export async function getCurrentRole(serverId: string, userId: string) {

@@ -17,3 +17,28 @@
   ::-webkit-scrollbar {
     display: none;
   }
+
+  .lk-control-bar > .lk-button-group > .lk-button-group-menu {
+    display: none!important;
+  }
+  
+  .lk-control-bar > .lk-button-group > .lk-button {
+    height: 40px!important;
+    width: 40px!important;
+    border-radius: 100px!important;
+  }
+
+  .control-bar > .lk-control-bar > .lk-disconnect-button {
+    height: 40px!important;
+    width: 40px!important;
+    border-radius: 100px!important;
+  }
+  
+  .lk-control-bar > .lk-button-group > .lk-button[aria-pressed="false"] {
+    color: red;
+  }
+
+  .control-bar > .lk-control-bar{
+    display: flex!important;
+    width: 80px!important;
+  }
