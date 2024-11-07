@@ -19,8 +19,6 @@ const Menu:React.FC<MenuProps> = ({servers, account}) => {
     const [open, setOpen] = useState(false)
     const [open2, setOpen2] = useState(false)
 
-    console.log(params)
-
     if(!servers){
         return null
     }
@@ -59,17 +57,14 @@ const Menu:React.FC<MenuProps> = ({servers, account}) => {
                 <div className="cursor-pointer h-[60px] w-[60px] bg-white transition-all rounded-[28px] hover:rounded-[16px] text-black text-3xl flex items-center justify-center" onClick={() => setOpen2(true)}>
                     <span className="h-[70%]">S</span>
                 </div>
-                <div className="cursor-pointer h-[60px] w-[60px] bg-white transition-all rounded-[28px] hover:rounded-[16px] text-black text-3xl flex items-center justify-center">
-                    <span className="h-[70%]">X</span>
-                </div>
                 <hr className="h-1 w-[80%] text-white"/>
                 {serverNames.map((server) => (
                     <div key={server.id} className="relative cursor-pointer overflow-visible h-[60px] w-[60px] rounded-full bg-[url('../public/images/round.png')] bg-center bg-cover bg-no-repeat"
                         onClick={() => handleClick(server.id)}>
-                        {server.id === params.serverId ? (
-                            <Image src={`/images/red-circle.png`} width={80} height={80} alt={""} className="absolute h-full w-full bg-center bg-cover object-contain invert"/>) : (
-                            <Image src={`/images/red-circle.png`} width={80} height={80} alt={""} className="absolute h-full w-full bg-center bg-cover object-contain block hover:invert-[55%] transition-all"/>)}
-                        <Image src={`/uploads/${server.serverImage}`} width={80} height={80} alt={""} className="h-full w-full bg-center bg-cover object-contain"/>
+                        {server.id === params?.serverId ? (
+                            <Image src={`/images/red-circle.png`} width={85} height={85} alt={""} className="absolute h-full w-full bg-center bg-cover object-contain invert"/>) : (
+                            <Image src={`/images/red-circle.png`} width={85} height={85} alt={""} className="absolute h-full w-full bg-center bg-cover object-contain block hover:invert-[55%] transition-all"/>)}
+                        <Image src={`/uploads/${server.serverImage}`} width={70} height={70} alt={""} className="h-full rounded-full w-full bg-center bg-cover object-contain"/>
                     </div>
                 ))}
             </div>

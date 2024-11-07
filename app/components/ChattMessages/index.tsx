@@ -2,10 +2,9 @@
 
 import { useChatQuery } from "@/hooks/use-chat-query";
 import { Account, Member, Message, User } from "@prisma/client";
-import { Fragment, useRef, ElementRef } from "react";
+import { Fragment, useRef, ElementRef, useState, useEffect } from "react";
 import { format } from "date-fns"
 import ChattItem from "../ChattItem";
-import { useChatScroll } from "@/hooks/use-chat-scroll";
 
 const DATE_FORMAT = "d MMM yyyy, HH:mm"
 
@@ -33,91 +32,72 @@ interface ChattMessagesProps{
 
 }
 
-const ChattMessages:React.FC<ChattMessagesProps> = ({
-    userId,
-    chatId,
-    member,
-    channelId,
-    apiUrl,
-    socketUrl,
-    socketQuery,
-    paramValue
-}) => {
-    const queryKey = `chat:${chatId}`
-    const {data, fetchNextPage, hasNextPage, isFetchingNextPage, status, error} = useChatQuery({
-        queryKey,
+const ChattMessages = ({ channelId, apiUrl, socketUrl, socketQuery, member }: ChattMessagesProps) => {
+    const [hasFetched, setHasFetched] = useState(false);
+    const { messages, fetchMessages, hasMore, loading, error } = useChatQuery({
         apiUrl,
-        paramValue,
+        paramValue: channelId,
     });
-    const chatRef = useRef<ElementRef<"div">>(null)
-    const bottomRef = useRef<ElementRef<"div">>(null)
-    useChatScroll({
-        chatRef,
-        bottomRef,
-        loadMore: fetchNextPage,
-        shouldLoadMore: !isFetchingNextPage && !!hasNextPage,
-        count: data?.pages?.[0]?.items?.length ?? 0,
-    })
 
-
-    if(status === "pending"){
-        return(
-        <div className="flex flex-col flex-1 justify-center items-center">
-            <div className="h-10 w-10">Loading</div>
-        </div>
-        )
+    if (!hasFetched && messages.length === 0) {
+        fetchMessages();
+        setHasFetched(true);
     }
 
-    if(status === "error"){
-        return(
-        <div className="flex flex-col flex-1 justify-center items-center">
-            <div className="h-10 w-10">Error</div>
-        </div>
-        )
-    }    
+    const handleLoadMore = () => {
+        fetchMessages();
+    };
 
-    return ( 
-    <div ref={chatRef} className="flex flex-grow flex-col py-4 h-10 overflow-y-auto">
-        <div className="flex flex-col-reverse">
-            {data?.pages?.map((group, i) => (
-                <Fragment key={i}>
-                    {group.items.map((message: MessageWithMemberWithAccount) => (
-                        <div key={message.id}>
-                            <ChattItem 
-                            key={message.id}
-                            id={message.id}
-                            name={message.member.profile.user.name}
-                            image={message.member.profile.user.image}
-                            content={message.content}
-                            member={message.member}
-                            timestamp={format(new Date(message.createdAt), DATE_FORMAT)}
-                            deleted={message.deleted}
-                            currentMember={member}
-                            isUpdated={message.updatedAt !== message.createdAt}
-                            socketUrl={socketUrl}
-                            socketQuery={socketQuery}/>
-                        </div>
-                    ))}
-                </Fragment>
-            ))}
-            {!hasNextPage && <div className="flex-1"></div>}
-            {!hasNextPage && <div className="flex items-center justify-center"><div>- Start of channel -</div></div>}
-            {hasNextPage && (
-            <div className="flex justify-center">
-                {isFetchingNextPage ? (
-                    <span>Loading...</span>
+    // Scroll to bottom whenever messages change
+    const chatContainerRef = useRef<HTMLDivElement>(null);
+    useEffect(() => {
+        if (chatContainerRef.current) {
+            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+    }, [messages]);
+
+    return (
+        <div ref={chatContainerRef} className="flex flex-grow flex-col py-4 h-10 overflow-y-auto">
+            <div className="flex flex-col-reverse">
+            {loading && <p>Loading...</p>}
+            {error && <p>Error loading messages: {error}</p>}
+            <Fragment>
+                {messages.length > 0 ? (
+                    messages.map((msg) => {
+                        return (
+                            <div key={msg.id}>
+                            <ChattItem
+                                key={msg.id}
+                                id={msg.id}
+                                name={msg.member?.profile?.user?.name}
+                                image={msg.member?.profile?.user?.image}
+                                content={msg.content}
+                                member={msg.member}
+                                timestamp={format(new Date(msg.createdAt), DATE_FORMAT)}
+                                deleted={msg.deleted}
+                                currentMember={member}
+                                isUpdated={msg.updatedAt !== msg.createdAt}
+                                socketUrl={socketUrl}
+                                socketQuery={socketQuery}
+                            />
+                            </div>
+                        );
+                    })
                 ) : (
-                    <button onClick={() => fetchNextPage()} 
-                    className="text-zinc-500 h-6 hover:text-zinc-600 text-sm my-4 transition">
-                        Load Previous messages
-                    </button>
+                    !loading && <div className="flex items-center justify-center text-zinc-600"><div>No messages found</div></div>
                 )}
+            </Fragment>
+            {hasMore && !loading ? (
+                <button onClick={handleLoadMore} 
+                className="text-zinc-500 h-6 hover:text-zinc-600 text-sm my-4 transition">
+                    Load Previous messages
+                </button>
+            ) : (
+                <div className="flex items-center justify-center"><div>- Start of channel -</div></div>
+            )}
             </div>
-        )}
-        <div ref={bottomRef}/>
         </div>
-    </div> 
     );
-}
- 
+};
+
 export default ChattMessages;

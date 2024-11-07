@@ -29,8 +29,6 @@ const ServerPage = async ({params}: {params: IParams}) => {
         }
       })
 
-      console.log("CHANNELS: ", channel)
-
     if(!channel){
         return null
     }
