@@ -83,6 +83,13 @@ export async function GET(
             })
         }
 
+        if(!messages){
+            return NextResponse.json(
+              { message: "Missing Messages" },
+              { status: 400 }
+            );
+          }
+
         let nextCursor = null;
 
         if(messages.length === MESSAGES_BATCH){
@@ -90,7 +97,6 @@ export async function GET(
         }
         return NextResponse.json({items: messages, nextCursor: nextCursor})
     }catch(error){
-        console.log("[MESSAGES_GET]", error);
-        return new NextResponse("INTERNAL_ERROR", {status: 500})
+        return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
     }
 }

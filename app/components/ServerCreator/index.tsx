@@ -1,25 +1,25 @@
 "use client"
 
-import { getCurrentAccount, getCurrentUser } from "@/app/api/helpers/utils";
 import { Account } from "@prisma/client";
 import { ChangeEvent, useRef, useState } from "react";
 import Brushed from "../Brushed";
+import { useRouter } from 'next/navigation'
 
 interface ServerCreatorProps{
     account: Account | null
 }
 
 const ServerCreator:React.FC<ServerCreatorProps> = ({account}) => {
+  const [name, setName] = useState("");
+  const [image, setImage] = useState<File | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [message, setMessage] = useState("");
+  const router = useRouter()
 
     if(!account){
         return(<>...Loading</>)
     }
 
-
-    const [name, setName] = useState("");
-    const [image, setImage] = useState<File | null>(null);
-    const fileInputRef = useRef<HTMLInputElement>(null);
-    const [message, setMessage] = useState("");
     const userId = account.userId;
 
     const handleImageUploadClick = () => {
@@ -57,7 +57,6 @@ const ServerCreator:React.FC<ServerCreatorProps> = ({account}) => {
       formData.append("image", image);
       formData.append("name", name);
       formData.append("userId", userId); // You can append text data to the FormData as well
-
       try {
         const response = await fetch("/api/createServer", {
           method: "POST",
@@ -68,6 +67,7 @@ const ServerCreator:React.FC<ServerCreatorProps> = ({account}) => {
         if (response.ok) {
           console.log("File uploaded successfully!");
           setMessage("File uploaded successfully!");
+          router.refresh()
         } else {
           const errorData = await response.json();
           console.log(`Error: ${errorData.message}`);
@@ -121,7 +121,7 @@ const ServerCreator:React.FC<ServerCreatorProps> = ({account}) => {
                 className="mb-4 text-black"
               />
               <div className="invert hover:invert-0">
-                <Brushed brush={"2"}><button type="submit">Sign Up</button></Brushed>
+                <Brushed brush={"2"}><button type="submit">Create Server</button></Brushed>
               </div>
             </div>
           </form>

@@ -1,10 +1,6 @@
-
-import { getCurrentUser } from "@/app/api/helpers/utils"
 import ChattHeader from "../ChattHeader"
 import ChattInput from "../ChattInput"
-import SignIn from "../SignIn"
 import { Member, Server } from "@prisma/client"
-import Image from "next/image"
 import ChattMessages from "../ChattMessages"
 
 interface ChattBoxProps{
