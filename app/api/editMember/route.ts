@@ -1,4 +1,3 @@
-//localhost:3000/app/api/editMember/route.ts
 import prisma from "@/lib/prisma";
 import { NextResponse } from "next/server";
 
