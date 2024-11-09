@@ -7,9 +7,9 @@ const nextConfig = {
         })
         return config;
     },
-    images: {
-        domains: ['lh3.googleusercontent.com'], // Add the external domain here
-    }
+    images:{
+        domains: ['lh3.googleusercontent.com', 'adoring-poitras.212-72-171-49.plesk.page'],
+    },
 };
 
 export default nextConfig;
